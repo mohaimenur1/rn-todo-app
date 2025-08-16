@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FlatList,
   Modal,
@@ -8,39 +8,59 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import noteService from "../../services/noteService";
 
 const Notes = () => {
-  const [notes, setNotes] = useState([
-    { id: " 1", content: "Note 1" },
-    { id: "2", content: "Note 2" },
-    { id: "3", content: "Note 3" },
-  ]);
-
   const [modalVisible, setModalVisible] = useState(false);
-  const [newNote, setNewNote] = useState("");
+  const [notes, setNotes] = useState([]);
+  const [newNote, setNewNote] = useState();
+  const [loading, setLoading] = useState(false);
 
-  const addNote = () => {
+  useEffect(() => {
+    fetchNotes();
+  }, []);
+
+  const fetchNotes = async () => {
+    try {
+      setLoading(true);
+      const response = await noteService.getNotes();
+      setNotes(response.data);
+    } catch (error) {
+      console.error("Error fetching notes:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addNote = async () => {
     if (newNote.trim() === "") {
       return; // Prevent adding empty notes
     }
-    const newNoteItem = {
-      id: Math.random().toString(),
-      content: newNote,
-    };
-    setNotes((prevNotes) => [...prevNotes, newNoteItem]);
-    setNewNote("");
-    setModalVisible(false);
+
+    try {
+      // Call your service correctly
+      const response = await noteService.createNote(newNote);
+
+      // Update state with new note
+      setNotes((prevNotes) => [...prevNotes, response.data]);
+
+      // Reset UI
+      setNewNote("");
+      setModalVisible(false);
+    } catch (error) {
+      console.error("Error adding note:", error.message);
+    }
   };
 
   return (
     <View style={Styles.container}>
       <FlatList
         data={notes}
-        keyExtractor={(item) => item?.id}
+        keyExtractor={(item) => item?.$id}
         renderItem={({ item }) => {
           return (
             <View style={Styles.noteItem}>
-              <Text>{item?.content}</Text>
+              <Text>{item?.text}</Text>
             </View>
           );
         }}
