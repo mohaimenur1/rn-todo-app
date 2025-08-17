@@ -20,6 +20,14 @@ const databaseService = {
       throw error;
     }
   },
+
+  // delete document
+  async deleteDocument(databaseId, collectionId, id) {
+    try {
+      await database.deleteDocument(databaseId, collectionId, id);
+      return { success: true };
+    } catch (error) {}
+  },
 };
 
 export default databaseService;

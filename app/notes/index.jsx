@@ -52,6 +52,16 @@ const Notes = () => {
     }
   };
 
+  // delete a note
+  const deleteNote = async (id) => {
+    try {
+      await noteService.deleteNote(id);
+    } catch (error) {
+      console.error("Error deleting note:", error.message);
+    }
+    setNotes((prevNotes) => prevNotes.filter((note) => note.$id !== id));
+  };
+
   return (
     <View style={Styles.container}>
       <FlatList
@@ -61,6 +71,10 @@ const Notes = () => {
           return (
             <View style={Styles.noteItem}>
               <Text>{item?.text}</Text>
+              {/* Delete Button */}
+              <TouchableOpacity onPress={() => deleteNote(item.$id)}>
+                <Text style={Styles.deleteButton}>✕</Text>
+              </TouchableOpacity>
             </View>
           );
         }}
@@ -185,5 +199,11 @@ const Styles = StyleSheet.create({
   saveButtonText: {
     fontSize: 16,
     color: "#fff",
+  },
+  deleteButton: {
+    color: "red",
+    fontSize: 18,
+    fontWeight: "bold",
+    paddingHorizontal: 8,
   },
 });

@@ -4,9 +4,6 @@ import databaseService from "./databaseService";
 const dbId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID;
 const colId = process.env.EXPO_PUBLIC_APPWRITE_COLLECTION_ID;
 
-console.log("Database ID:", dbId);
-console.log("Collection ID:", colId);
-
 const noteService = {
   //get all notes
   async getNotes() {
@@ -20,9 +17,6 @@ const noteService = {
   },
   //   create a new note
   async createNote(note) {
-    console.log("Creating note:", note);
-    console.log("id", ID.unique());
-
     const docId = ID.unique();
     try {
       const data = {
@@ -39,6 +33,21 @@ const noteService = {
       return { data: response };
     } catch (error) {
       console.error("Error creating note:", error.message);
+      throw error;
+    }
+  },
+
+  // delete a note
+  async deleteNote(noteId) {
+    try {
+      const response = await databaseService.deleteDocument(
+        dbId,
+        colId,
+        noteId
+      );
+      return { success: true };
+    } catch (error) {
+      console.error("Error deleting note:", error.message);
       throw error;
     }
   },
