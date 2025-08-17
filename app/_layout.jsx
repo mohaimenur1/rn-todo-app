@@ -9,8 +9,12 @@ export default function RootLayout() {
       }}
     >
       <Stack.Screen
-        name="index"
-        options={{ title: "Home", headerTitleAlign: "center" }}
+        name="(tabs)"
+        options={{
+          title: "Home",
+          headerTitleAlign: "center",
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="notes"

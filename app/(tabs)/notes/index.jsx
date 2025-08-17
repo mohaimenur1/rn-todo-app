@@ -1,3 +1,4 @@
+import noteService from "@/services/noteService";
 import { useEffect, useState } from "react";
 import {
   FlatList,
@@ -8,7 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import noteService from "../../services/noteService";
 
 const Notes = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -123,8 +123,9 @@ export default Notes;
 const Styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#f5f5f5",
+    marginTop: 20,
+    padding: 26,
+    backgroundColor: "#1e293b",
   },
   noteItem: {
     flexDirection: "row",
