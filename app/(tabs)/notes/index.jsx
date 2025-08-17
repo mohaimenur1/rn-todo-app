@@ -123,7 +123,7 @@ export default Notes;
 const Styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
+    // marginTop: 20,
     padding: 26,
     backgroundColor: "#1e293b",
   },
@@ -131,6 +131,7 @@ const Styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "#aeadadff",
+    marginTop: 10,
     padding: 15,
     borderRadius: 5,
     marginVertical: 5,
