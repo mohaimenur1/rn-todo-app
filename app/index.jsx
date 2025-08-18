@@ -1,122 +1,111 @@
-// import PostIt from "@/assets/images/post-it.png"; // Example image import
-// import { useRouter } from "expo-router";
-// import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
-// export default function Index() {
-//   const router = useRouter();
-//   return (
-//     <View
-//       style={{
-//         flex: 1,
-//         justifyContent: "center",
-//         alignItems: "center",
-//       }}
-//     >
-//       <Image source={PostIt} style={styles.logoImage} />
-//       <Text style={styles.title}>Welcome to Notes App</Text>
-//       <Text style={styles.subTitle}>
-//         Captures your thoughts any time, any where
-//       </Text>
-//       <TouchableOpacity
-//         style={styles.button}
-//         onPress={() => router.push("/notes")}
-//       >
-//         <Text style={{ color: "white" }}>Get Started</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   logoImage: { width: 100, height: 100 },
-//   title: {
-//     fontSize: 24,
-//     fontWeight: "bold",
-//     marginTop: 20,
-//   },
-//   subTitle: {
-//     fontSize: 16,
-//     color: "#666",
-//     marginTop: 10,
-//   },
-//   button: {
-//     backgroundColor: "#3d81ceff",
-//     color: "#fff",
-//     padding: 10,
-//     borderRadius: 5,
-//     marginTop: 20,
-//     fontSize: 16,
-//     fontWeight: "bold",
-//   },
-// });
-
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useRouter } from "expo-router";
+import {
+  ImageBackground,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const splashImage = require("@/assets/images/splash.png");
 
-export default function CoffeeScreen() {
+const CoffeeApp = () => {
+  const router = useRouter();
   return (
-    <Image
-      source={splashImage} // <-- replace with your coffee image path
-      style={styles.background}
-      resizeMode="cover"
-    >
-      <View style={styles.overlay} />
-
-      <View style={styles.content}>
-        <Text style={styles.title}>
-          Fall in Love with{"\n"}Coffee in Blissful Delight!
-        </Text>
-        <Text style={styles.subtitle}>
-          Welcome to our cozy coffee corner, where{"\n"}
-          every cup is a delightful for you.
-        </Text>
-
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Get Started</Text>
-        </TouchableOpacity>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" />
+      <View>
+        {/* Background image shifted upward */}
+        <ImageBackground
+          source={splashImage}
+          style={styles.background}
+          resizeMode="cover"
+        >
+          <View style={styles.fadeOverlay} />
+          {/* Black overlay at the bottom */}
+          <View style={styles.bottomSection}>
+            <Text style={styles.title}>
+              Fall in Love with {"\n"}
+              Coffee in Blissful {"\n"} Delight!
+            </Text>
+            <Text style={styles.subtitle}>
+              Welcome to our cozy coffee corner, where {"\n"} every cup is a
+              delightful for you.
+            </Text>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => router.push("/notes")}
+            >
+              <Text style={styles.buttonText}>Get Started</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
       </View>
-    </Image>
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  background: {
+  container: {
     flex: 1,
+    backgroundColor: "#000", // ensures black below shifted image
+  },
+  background: {
+    // flex: 1,
+    height: "90%",
+    // width: "80%",
     justifyContent: "flex-end",
+    // marginTop: 90,
   },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0,0,0,0.4)", // dark overlay for readability
+  fadeOverlay: {
+    position: "absolute",
+    bottom: "25%", // start fading above bottomSection
+    left: 0,
+    right: 0,
+    height: 120, // how tall the fade is
+    // backgroundColor: "rgba(0,0,0,0.1)",
   },
-  content: {
-    padding: 20,
+  bottomSection: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: "20%", // height of the bottom section
+    backgroundColor: "rgba(0,0,0,)",
+    // padding: 0,
+    // paddingVertical: -10,
     alignItems: "center",
   },
   title: {
-    fontSize: 26,
+    fontSize: 28,
+    color: "#FFFFFF",
     fontWeight: "bold",
-    color: "#fff",
     textAlign: "center",
     marginBottom: 10,
+    letterSpacing: 3, // Add space between letters
+    lineHeight: 40,
   },
   subtitle: {
-    fontSize: 14,
-    color: "#d1d5db",
+    fontSize: 16,
+    color: "#7a7a7aff",
     textAlign: "center",
-    marginBottom: 30,
+    marginBottom: 20,
   },
   button: {
-    backgroundColor: "#d07c44", // coffee-like color
-    paddingVertical: 14,
-    paddingHorizontal: 40,
-    borderRadius: 10,
-    width: "90%",
+    backgroundColor: "#8B4513",
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    borderRadius: 15,
+    width: "80%",
     alignItems: "center",
   },
   buttonText: {
-    color: "#fff",
-    fontSize: 16,
+    color: "#FFFFFF",
+    fontSize: 18,
     fontWeight: "bold",
   },
 });
+
+export default CoffeeApp;
